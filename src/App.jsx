@@ -4,6 +4,7 @@ import { Loader2 } from 'lucide-react'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { ProgressProvider, useProgressContext } from './context/ProgressContext'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import Toast from './components/Toast'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
@@ -32,16 +33,19 @@ function AppContent() {
   if (cloudLoading) return <LoadingScreen message="Đang tải tiến trình..." />
 
   return (
-    <div className="min-h-screen bg-oc-bg">
-      <Navbar />
-      <Routes>
-        <Route path="/"          element={<Dashboard />} />
-        <Route path="/roadmap"   element={<Roadmap />} />
-        <Route path="/week/:id"  element={<WeekDetail />} />
-        <Route path="/resources" element={<Resources />} />
-        <Route path="/progress"  element={<Progress />} />
-        <Route path="*"          element={<Navigate to="/" replace />} />
-      </Routes>
+    <div className="min-h-screen bg-oc-bg flex flex-col justify-between">
+      <div className="flex-1">
+        <Navbar />
+        <Routes>
+          <Route path="/"          element={<Dashboard />} />
+          <Route path="/roadmap"   element={<Roadmap />} />
+          <Route path="/week/:id"  element={<WeekDetail />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/progress"  element={<Progress />} />
+          <Route path="*"          element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
+      <Footer />
       <Toast badge={newBadge} onClose={() => {}} />
     </div>
   )
