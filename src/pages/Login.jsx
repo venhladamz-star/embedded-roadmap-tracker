@@ -13,8 +13,24 @@ export default function Login() {
     setError(null)
     try {
       await signInWithGoogle()
+      // Popup thành công sẽ kích hoạt onAuthStateChanged, AppContent tự chuyển hướng
     } catch (err) {
-      setError('Đăng nhập thất bại. Thử lại nhé!')
+      console.error('Sign-in error details:', err)
+      let friendlyMsg = 'Đăng nhập thất bại. Thử lại nhé!'
+      
+      if (err.code === 'auth/operation-not-allowed') {
+        friendlyMsg = 'Lỗi: Bạn chưa BẬT nhà cung cấp Google Sign-In trong Firebase Console! Hãy truy cập Firebase Console > Authentication > Sign-in method và Bật "Google" lên.'
+      } else if (err.code === 'auth/popup-blocked') {
+        friendlyMsg = 'Lỗi: Trình duyệt đã chặn cửa sổ đăng nhập (Popup). Hãy cho phép hiển thị popup cho trang web này và thử lại.'
+      } else if (err.code === 'auth/popup-closed-by-user') {
+        friendlyMsg = 'Bạn đã đóng cửa sổ đăng nhập trước khi hoàn tất quá trình.'
+      } else if (err.code === 'auth/internal-error') {
+        friendlyMsg = `Lỗi hệ thống Firebase. Chi tiết: ${err.message}`
+      } else if (err.message) {
+        friendlyMsg = `Lỗi: ${err.message} (${err.code || 'unknown'})`
+      }
+      
+      setError(friendlyMsg)
       setLoading(false)
     }
   }

@@ -60,11 +60,17 @@ function fsDocRef(uid) {
 }
 
 async function loadFromCloud(uid) {
+  // Tạo timeout 4 giây để tránh việc UI bị treo vô hạn khi Firestore chưa khởi tạo hoặc mạng lag
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Firestore timeout (4s)')), 4000)
+  )
+
   try {
-    const snap = await getDoc(fsDocRef(uid))
+    const fetchPromise = getDoc(fsDocRef(uid))
+    const snap = await Promise.race([fetchPromise, timeoutPromise])
     if (snap.exists()) return snap.data()
   } catch (e) {
-    console.warn('Firestore load failed, using local:', e)
+    console.error('Firestore load failed or timed out. Fallback to LocalStorage. Error:', e)
   }
   return null
 }
@@ -73,7 +79,7 @@ async function saveToCloud(uid, data) {
   try {
     await setDoc(fsDocRef(uid), data)
   } catch (e) {
-    console.warn('Firestore save failed:', e)
+    console.error('Firestore save failed:', e)
   }
 }
 
@@ -102,21 +108,45 @@ export function useProgress(uid = null) {
     // Logged in → load from Firestore (fallback to localStorage)
     setCloudLoading(true)
     setProgress(defaultState()) // reset while loading
-    loadFromCloud(uid).then(cloudData => {
-      if (cloudData) {
-        setProgress(cloudData)
-      } else {
-        // First time this user — try migrate from localStorage
+
+    let active = true
+
+    async function fetchData() {
+      try {
+        const cloudData = await loadFromCloud(uid)
+        if (!active) return
+
+        if (cloudData) {
+          setProgress(cloudData)
+        } else {
+          // First time this user — try migrate from localStorage
+          try {
+            const raw = localStorage.getItem(STORAGE_KEY)
+            if (raw) setProgress(JSON.parse(raw))
+            else setProgress(defaultState())
+          } catch (_) {
+            setProgress(defaultState())
+          }
+        }
+      } catch (err) {
+        console.error("Critical error while loading data from cloud:", err)
+        // Fallback to local
         try {
           const raw = localStorage.getItem(STORAGE_KEY)
           if (raw) setProgress(JSON.parse(raw))
-          else setProgress(defaultState())
-        } catch (_) {
-          setProgress(defaultState())
+        } catch (_) {}
+      } finally {
+        if (active) {
+          setCloudLoading(false)
         }
       }
-      setCloudLoading(false)
-    })
+    }
+
+    fetchData()
+
+    return () => {
+      active = false
+    }
   }, [uid])
 
   // ── Persist to localStorage + debounce Firestore save ───
