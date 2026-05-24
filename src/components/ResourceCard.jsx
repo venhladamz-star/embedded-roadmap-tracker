@@ -1,11 +1,11 @@
 // ResourceCard.jsx — Single resource card with toggle
-import { ExternalLink, Play, FileText, MonitorSmartphone, Github, Wrench, FileType2, CheckCircle2, Circle } from 'lucide-react'
+import { ExternalLink, Play, FileText, MonitorSmartphone, GitBranch, Wrench, FileType2, CheckCircle2, Circle } from 'lucide-react'
 
 const ICONS = {
   video:       <Play size={15} className="text-oc-error" />,
   article:     <FileText size={15} className="text-oc-link" />,
   interactive: <MonitorSmartphone size={15} className="text-oc-warning" />,
-  github:      <Github size={15} className="text-oc-body" />,
+  github:      <GitBranch size={15} className="text-oc-body" />,
   tool:        <Wrench size={15} className="text-oc-success-fg" />,
   pdf:         <FileType2 size={15} className="text-oc-warning" />,
 }

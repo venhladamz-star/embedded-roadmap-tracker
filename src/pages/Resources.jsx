@@ -1,6 +1,6 @@
 // Resources.jsx — All resources library with filters
 import { useState, useMemo } from 'react'
-import { Search, ExternalLink, CheckCircle2, Circle, Play, FileText, MonitorSmartphone, Github, Wrench, FileType2 } from 'lucide-react'
+import { Search, ExternalLink, CheckCircle2, Circle, Play, FileText, MonitorSmartphone, GitBranch, Wrench, FileType2 } from 'lucide-react'
 import { PHASES, WEEKS, RESOURCE_TYPE_LABELS } from '../data/courseData'
 import { useProgressContext } from '../context/ProgressContext'
 import { useNavigate } from 'react-router-dom'
@@ -9,7 +9,7 @@ const TYPE_ICONS = {
   video:       <Play size={13} className="text-oc-error" />,
   article:     <FileText size={13} className="text-oc-link" />,
   interactive: <MonitorSmartphone size={13} className="text-oc-warning" />,
-  github:      <Github size={13} className="text-oc-body" />,
+  github:      <GitBranch size={13} className="text-oc-body" />,
   tool:        <Wrench size={13} className="text-oc-success-fg" />,
   pdf:         <FileType2 size={13} className="text-oc-warning" />,
 }
