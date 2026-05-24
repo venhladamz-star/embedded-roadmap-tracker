@@ -1,11 +1,14 @@
-// ProgressContext.jsx — Global context for progress state
+// ProgressContext.jsx — Global context passing uid from auth
 import { createContext, useContext } from 'react'
 import { useProgress } from '../hooks/useProgress'
+import { useAuth } from './AuthContext'
 
 const ProgressContext = createContext(null)
 
 export function ProgressProvider({ children }) {
-  const progress = useProgress()
+  const { user } = useAuth()
+  const progress = useProgress(user?.uid || null)
+
   return (
     <ProgressContext.Provider value={progress}>
       {children}
