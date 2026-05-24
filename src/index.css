@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --oc-bg:          #0D1117;
+  --oc-surface:     #161B22;
+  --oc-overlay:     #1C2128;
+  --oc-modal:       #21262D;
+  --oc-border:      #30363D;
+  --oc-border-h:    #484F58;
+  --oc-text:        #E6EDF3;
+  --oc-body:        #C9D1D9;
+  --oc-muted:       #8B949E;
+  --oc-faint:       #484F58;
+  --oc-primary:     #2F81F7;
+  --oc-link:        #58A6FF;
+  --oc-success:     #238636;
+  --oc-success-fg:  #3FB950;
+  --oc-warning:     #D29922;
+  --oc-error:       #F85149;
+  --oc-accent:      #F78166;
+  --oc-done-bg:     #0A3622;
+  --phase1:         #2F81F7;
+  --phase2:         #238636;
+  --phase3:         #D29922;
+  --phase4:         #F85149;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: #0D1117;
+  color: #E6EDF3;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0D1117;
+}
+::-webkit-scrollbar-thumb {
+  background: #30363D;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #484F58;
+}
+
+/* Selection */
+::selection {
+  background: rgba(47,129,247,0.3);
+  color: #E6EDF3;
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid #2F81F7;
+  outline-offset: 2px;
+}
+
+/* Progress bar track */
+.progress-track {
+  background: #21262D;
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 300ms ease;
+}
+
+/* Textarea */
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Smooth transitions */
+.transition-colors {
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+/* Active week sidebar border */
+.week-active {
+  border-left: 2px solid #F78166;
+  background: #1C2128;
+}
+
+/* Resource card done state */
+.resource-done {
+  background: #0A3622 !important;
+  border-color: #238636 !important;
+}
+
+/* Chip/tag pill */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 10px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* Pulse animation for current week */
+@keyframes pulse-border {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(247, 129, 102, 0.4); }
+  50%       { box-shadow: 0 0 0 4px rgba(247, 129, 102, 0); }
+}
+
+.pulse-accent {
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 150ms ease forwards;
+}
+
+/* Toast slide-in */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.toast-enter {
+  animation: slideUp 200ms ease forwards;
+}
+
+@keyframes slideDown {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(16px); }
+}
+
+.toast-exit {
+  animation: slideDown 200ms ease forwards;
+}
