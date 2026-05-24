@@ -35,13 +35,76 @@
   padding: 0;
 }
 
+:root {
+  /* Dark mode variables (Default) */
+  --oc-bg:          #0D1117;
+  --oc-surface:     #161B22;
+  --oc-overlay:     #1C2128;
+  --oc-modal:       #21262D;
+  --oc-border:      #30363D;
+  --oc-border-h:    #484F58;
+  --oc-text:        #E6EDF3;
+  --oc-body:        #C9D1D9;
+  --oc-muted:       #8B949E;
+  --oc-faint:       #484F58;
+  --oc-primary:     #2F81F7;
+  --oc-primary-h:   #388BFD;
+  --oc-link:        #58A6FF;
+  --oc-success:     #238636;
+  --oc-success-fg:  #3FB950;
+  --oc-warning:     #D29922;
+  --oc-error:       #F85149;
+  --oc-accent:      #F78166;
+  --oc-done-bg:     #092617;
+  --oc-done-text:   #3FB950;
+  --phase1:         #2F81F7;
+  --phase2:         #238636;
+  --phase3:         #D29922;
+  --phase4:         #F85149;
+}
+
+[data-theme='light'] {
+  /* Light mode variables (Soft light blue base with excellent contrast) */
+  --oc-bg:          #EBF3FC; /* Sáng xanh da trời nhẹ tinh tế */
+  --oc-surface:     #FFFFFF; /* Nền card trắng tinh khôi nổi bật */
+  --oc-overlay:     #DEEAF7; /* Xanh da trời sâu hơn làm hover */
+  --oc-modal:       #FFFFFF;
+  --oc-border:      #C4D8EC; /* Viền xanh da trời dịu mắt */
+  --oc-border-h:    #9EBEDF;
+  --oc-text:        #0F172A; /* Chữ Slate 900 đen sắc nét cực dễ đọc */
+  --oc-body:        #2D3748; /* Chữ xám Slate 800 dễ nhìn */
+  --oc-muted:       #5A6B82;
+  --oc-faint:       #8FA3B8;
+  --oc-primary:     #0969DA; /* Xanh dương đậm để tương phản tốt */
+  --oc-primary-h:   #0353B4;
+  --oc-link:        #0969DA;
+  --oc-success:     #1A7F37; /* Xanh lá đậm cho độ tương phản */
+  --oc-success-fg:  #1A7F37;
+  --oc-warning:     #9A6700;
+  --oc-error:       #CF222E;
+  --oc-accent:      #BC4C00;
+  --oc-done-bg:     #DCFCE7; /* Nền xanh lá pastel dễ chịu */
+  --oc-done-text:   #15803D; /* Chữ xanh lá đậm rõ nét */
+  --phase1:         #0969DA;
+  --phase2:         #1A7F37;
+  --phase3:         #9A6700;
+  --phase4:         #CF222E;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 html, body {
-  background: #0D1117;
-  color: #E6EDF3;
+  background: var(--oc-bg);
+  color: var(--oc-text);
   font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  font-size: 15px; /* Tăng cỡ chữ lên 15px để dễ nhìn hơn */
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 150ms ease, color 150ms ease;
 }
 
 /* Custom scrollbar */
@@ -50,31 +113,31 @@ html, body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0D1117;
+  background: var(--oc-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: #30363D;
+  background: var(--oc-border);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #484F58;
+  background: var(--oc-border-h);
 }
 
 /* Selection */
 ::selection {
   background: rgba(47,129,247,0.3);
-  color: #E6EDF3;
+  color: var(--oc-text);
 }
 
 /* Focus ring */
 *:focus-visible {
-  outline: 2px solid #2F81F7;
+  outline: 2px solid var(--oc-primary);
   outline-offset: 2px;
 }
 
 /* Progress bar track */
 .progress-track {
-  background: #21262D;
+  background: var(--oc-border);
   height: 4px;
   border-radius: 2px;
   overflow: hidden;
@@ -99,14 +162,14 @@ textarea {
 
 /* Active week sidebar border */
 .week-active {
-  border-left: 2px solid #F78166;
-  background: #1C2128;
+  border-left: 2px solid var(--oc-accent);
+  background: var(--oc-overlay);
 }
 
 /* Resource card done state */
 .resource-done {
-  background: #0A3622 !important;
-  border-color: #238636 !important;
+  background: var(--oc-done-bg) !important;
+  border-color: var(--oc-success) !important;
 }
 
 /* Chip/tag pill */

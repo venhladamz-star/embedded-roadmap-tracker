@@ -1,10 +1,9 @@
-// Navbar.jsx — Top navigation bar with user avatar + logout
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Cpu, Search, LogOut, ChevronRight } from 'lucide-react'
+import { Cpu, Search, LogOut, ChevronRight, Sun, Moon } from 'lucide-react'
 import { useProgressContext } from '../context/ProgressContext'
 import { useAuth } from '../context/AuthContext'
 import { WEEKS } from '../data/courseData'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Navbar() {
   const { stats }             = useProgressContext()
@@ -15,6 +14,19 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false)
   const [results, setResults]       = useState([])
   const [showUserMenu, setShowUserMenu] = useState(false)
+
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark')
+  }
 
   const pct = Math.round((stats.weeksCompleted / 16) * 100)
 
@@ -107,6 +119,15 @@ export default function Navbar() {
           </div>
         )}
       </div>
+
+      {/* Theme Toggle Button */}
+      <button
+        onClick={toggleTheme}
+        className="w-7 h-7 rounded-full bg-oc-bg border border-oc-border text-oc-muted hover:text-oc-body hover:bg-oc-overlay transition-colors flex items-center justify-center"
+        title={theme === 'dark' ? "Chuyển sang chế độ sáng" : "Chuyển sang chế độ tối"}
+      >
+        {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+      </button>
 
       {/* Progress pill */}
       <div className="flex items-center gap-2 px-3 py-1 bg-oc-bg border border-oc-border rounded-full text-xs">
